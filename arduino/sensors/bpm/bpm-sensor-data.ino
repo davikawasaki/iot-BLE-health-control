@@ -1,22 +1,14 @@
-/*  Pulse Sensor Amped 1.4    by Joel Murphy and Yury Gitman   http://www.pulsesensor.com
-
-----------------------  Notes ----------------------  ---------------------- 
-This code:
-1) Blinks an LED to User's Live Heartbeat   PIN 13
-2) Fades an LED to User's Live HeartBeat
-3) Determines BPM
-4) Prints All of the Above to Serial
-
-Read Me:
-https://github.com/WorldFamousElectronics/PulseSensor_Amped_Arduino/blob/master/README.md   
- ----------------------       ----------------------  ----------------------
-*/
+#include <SoftwareSerial.h>
+SoftwareSerial esp8266(2,3);
+ 
+#define DEBUG true
 
 //  Variables
 int pulsePin = 0;                 // Pulse Sensor purple wire connected to analog pin 0
 int blinkPin = 13;                // pin to blink led at each beat
 int fadePin = 5;                  // pin to do fancy classy fading blink at each beat
 int fadeRate = 0;                 // used to fade LED on with PWM on fadePin
+String var;
 
 // Volatile Variables, used in the interrupt service routine!
 volatile int BPM;                   // int that holds raw Analog in 0. updated every 2mS
@@ -29,7 +21,27 @@ volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 static boolean serialVisual = true;   // Set to 'false' by Default.  Re-set to 'true' to see Arduino Serial Monitor ASCII Visual Pulse 
 
 
+
 void setup(){
+ esp8266.begin(115200);
+  // Reseta o módulo
+  sendData("AT+RST\r\n", 2000, DEBUG);
+  delay(1000);
+  Serial.println("\n\nVersao de firmware");
+  delay(3000);
+  sendData("AT+GMR\r\n", 2000, DEBUG); // rst
+  // Configure na linha abaixo a velocidade desejada para a
+  // comunicacao do modulo ESP8266 (9600, 19200, 38400, etc)
+  sendData("AT+CIOBAUD=115200\r\n", 2000, DEBUG);
+  Serial.println("\n\nConectando na rede Wi-Fi:");
+  delay(3000);
+  sendData("AT+CWJAP=\"UTFPR-WEB\",\"\"\r\n", 2000, DEBUG);
+  sendData("AT+CWMODE=1\r\n", 1000, DEBUG);
+  // Mostra o endereco IP
+  Serial.println("\n\nEndereco IP:");
+  delay(3000);
+  sendData("AT+CIFSR\r\n", 1000, DEBUG);
+  Serial.println("\n\n** Final **");
   pinMode(blinkPin,OUTPUT);         // pin that will blink to your heartbeat!
   pinMode(fadePin,OUTPUT);          // pin that will fade to your heartbeat!
   Serial.begin(9600);             // we agree to talk fast!
@@ -96,6 +108,13 @@ void serialOutputWhenBeatHappens(){
    // Serial.print("BPM: ");
     Serial.print(BPM);
     Serial.print("\n ");
+    sendData("AT+CIPSEND=64",2000,DEBUG);
+    var = ">GET /healthcontrol/index.php?BPM=";
+    var += BPM;
+    var += " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+  
+    sendData(var,2000,DEBUG);
+
  } else{
         sendDataToSerial('B',BPM);   // send heart rate with a 'B' prefix
         sendDataToSerial('Q',IBI);   // send time between beats with a 'Q' prefix
@@ -219,3 +238,24 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
 
   sei();                                   // enable interrupts when youre done!
 }// end isr
+
+String sendData(String command, const int timeout, boolean debug){
+  // Envio dos comandos AT para o modulo
+  String response = "";
+  esp8266.print(command);
+  long int time = millis();
+  while ( (time + timeout) > millis())
+  {
+    while (esp8266.available())
+    {
+      // The esp has data so display its output to the serial window
+      char c = esp8266.read(); // read the next character.
+      response += c;
+    }
+  }
+  if (debug)
+  {
+    Serial.print(response);
+  }
+  return response;
+}
