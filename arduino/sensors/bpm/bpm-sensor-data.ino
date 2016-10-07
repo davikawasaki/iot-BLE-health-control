@@ -3,12 +3,15 @@ SoftwareSerial esp8266(2,3);
  
 #define DEBUG true
 
-//  Variables
+//  Variáveis
 int pulsePin = 0;                 // Pulse Sensor purple wire connected to analog pin 0
 int blinkPin = 13;                // pin to blink led at each beat
 int fadePin = 5;                  // pin to do fancy classy fading blink at each beat
 int fadeRate = 0;                 // used to fade LED on with PWM on fadePin
-String var;
+String comandoGet;                       // variável utilizada para o comando GET
+String endServidor = "/healthcontrol/sendData.php?bpm=";
+String endHost = "luiseduardoluz.com\r\n\r\n";
+
 
 // Volatile Variables, used in the interrupt service routine!
 volatile int BPM;                   // int that holds raw Analog in 0. updated every 2mS
@@ -108,12 +111,11 @@ void serialOutputWhenBeatHappens(){
    // Serial.print("BPM: ");
     Serial.print(BPM);
     Serial.print("\n ");
-    sendData("AT+CIPSEND=64",2000,DEBUG);
-    var = ">GET /healthcontrol/index.php?BPM=";
-    var += BPM;
-    var += " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    comandoGet = ">GET "+endServidor+BPM+" HTTP/1.1\r\nHost: "+endHost;
+   String tamanhoComando = "AT+CIPSEND="+(comandoGet.length()-5-4); // quantidade de caracteres do comando GET
+   sendData(tamanhoComando,2000,DEBUG);
   
-    sendData(var,2000,DEBUG);
+    sendData(comandoGet,2000,DEBUG);
 
  } else{
         sendDataToSerial('B',BPM);   // send heart rate with a 'B' prefix
