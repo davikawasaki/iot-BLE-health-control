@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
-
+import { Configuracao } from '../pages/configuracao/configuracao';
+import { Historico } from '../pages/historico/historico';
+import { Login } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { Medico } from '../pages/medico/medico';
 
@@ -16,9 +18,9 @@ export class MyApp {
     this.pages=[
       {component:HomePage, title:'Home',icon: 'home'},
       {component:Medico, title:'Medico',icon: 'heart'},
-      {component:HomePage, title:'Historico',icon: 'stats'},
-      {component:HomePage, title:'Configuração',icon: 'options'},
-      {component:HomePage, title:'Login',icon: 'log-in'}
+      {component:Historico, title:'Historico',icon: 'stats'},
+      {component:Configuracao, title:'Configuração',icon: 'options'},
+      {component:Login, title:'Login',icon: 'log-in'}
     ];
 
     platform.ready().then(() => {
@@ -30,5 +32,5 @@ export class MyApp {
   openPage(page: any) : void{
     this.rootPage=page.component;
   }
-  
+
 }

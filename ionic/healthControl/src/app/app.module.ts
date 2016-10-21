@@ -3,11 +3,17 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Medico } from '../pages/medico/medico';
+import { Configuracao } from '../pages/configuracao/configuracao';
+import { Historico } from '../pages/historico/historico';
+import { Login } from '../pages/login/login';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    Medico
+    Medico,
+    Login,
+    Configuracao,
+    Historico
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -16,7 +22,10 @@ import { Medico } from '../pages/medico/medico';
   entryComponents: [
     MyApp,
     HomePage,
-    Medico
+    Medico,
+    Login,
+    Configuracao,
+    Historico
   ],
   providers: []
 })
