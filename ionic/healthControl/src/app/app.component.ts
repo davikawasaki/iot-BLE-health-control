@@ -30,4 +30,5 @@ export class MyApp {
   openPage(page: any) : void{
     this.rootPage=page.component;
   }
+  
 }
