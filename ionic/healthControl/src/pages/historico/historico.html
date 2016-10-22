@@ -20,4 +20,12 @@
 
 <ion-content padding>
 
+   <ion-list>
+    <ion-item *ngFor = "let l of listaHistorico">
+      <ion-label>BPM:{{l.bpm}}</ion-label>
+      <ion-label right>Data:{{l.data}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+
 </ion-content>
