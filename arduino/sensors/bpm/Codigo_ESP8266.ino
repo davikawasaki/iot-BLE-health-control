@@ -37,11 +37,11 @@ void setup() {
   // Configure na linha abaixo a velocidade desejada para a
   // comunicacao do modulo ESP8266 (9600, 19200, 38400, etc)
   sendData("AT+CIOBAUD=19200\r\n", 2000, DEBUG);
-  //Serial.println("\n\nConectando na rede Wi-Fi:");
-  //delay(3000);
-  // sendData(login_wifi, 2000, DEBUG);
-  // sendData("AT+CWMODE=1\r\n", 1000, DEBUG);
-  // Mostra o endereco IP
+  Serial.println("\n\nConectando na rede Wi-Fi:");
+  delay(3000);
+  sendData(login_wifi, 2000, DEBUG);
+  sendData("AT+CWMODE=1\r\n", 1000, DEBUG);
+  Mostra o endereco IP
   Serial.println("\n\nEndereco IP:");
   delay(3000);
   sendData("AT+CIFSR\r\n", 1000, DEBUG);
