@@ -6,6 +6,7 @@ import { Medico } from '../pages/medico/medico';
 import { Configuracao } from '../pages/configuracao/configuracao';
 import { Historico } from '../pages/historico/historico';
 import { Login } from '../pages/login/login';
+import { Bluetooth } from '../pages/bluetooth/bluetooth';
 @NgModule({
   declarations: [
     MyApp,
@@ -13,7 +14,8 @@ import { Login } from '../pages/login/login';
     Medico,
     Login,
     Configuracao,
-    Historico
+    Historico,
+    Bluetooth
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -25,7 +27,8 @@ import { Login } from '../pages/login/login';
     Medico,
     Login,
     Configuracao,
-    Historico
+    Historico,
+    Bluetooth
   ],
   providers: []
 })
