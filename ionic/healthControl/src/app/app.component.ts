@@ -6,6 +6,7 @@ import { Historico } from '../pages/historico/historico';
 import { Login } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { Medico } from '../pages/medico/medico';
+import { Bluetooth } from '../pages/bluetooth/bluetooth';
 //import { HistoricoFilho } from '../pages/historico-filho/historico-filho';
 
 @Component({
@@ -21,6 +22,7 @@ export class MyApp {
       {component:Medico, title:'Medico',icon: 'heart'},
       {component:Historico, title:'Historico',icon: 'stats'},
       {component:Configuracao, title:'Configuração',icon: 'options'},
+      {component:Bluetooth, title:'Bluetooth',icon: 'bluetooth'},
       {component:Login, title:'Login',icon: 'log-in'}
     ];
 
