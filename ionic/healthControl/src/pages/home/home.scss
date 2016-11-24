@@ -9,36 +9,30 @@ p{
   text-align: center;
 
 }
-ion-row.bola{
+body{
   background-image: url("../assets/bola.png");
   background-repeat: no-repeat;
-  background-position: center;
-  height: 50%;
-  // background-position: 41% 10%;
+
+  background-position: 41% 10%;
 }
-// botao{
-//   position: relative;
-//   top:50px;
-// }
+botao{
+  position: relative;
+  top:50px;
+
+}
 k{
   font-family: palatino;
   font-size: 25px;
   text-align: center;
+
 }
-h1.bola{
+h1{
+
   color:white;
-  // font-family: palatino;
-  font-size: 4em;
+  font-family: palatino;
+  font-size: 90px;
   text-align: center;
-  width: 100%;
-  margin: 0 !important;
-  // position: absolute;
-  // top:17%;
-  // left:34%;
-}
-.display-flex {
-  display: flex;
-	display: -webkit-flex;
-	align-items: center;
-	justify-content: center;
+  position: absolute;
+  top:17%;
+  left:34%;
 }

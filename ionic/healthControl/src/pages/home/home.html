@@ -17,13 +17,12 @@
   <p>Batimentos</p>
 
 
-  <ion-row class="bola">
-    <h1 class="bola display-flex">{{bpm}}</h1>
-  </ion-row>
-  <ion-row class="display-flex center">
-    <ion-spinner *ngIf="isReading" name="circles" style="font-size: 5em;"></ion-spinner>
-  </ion-row>
+  <body>
+    <h1>{{bpm}}</h1>
 
-  <button ion-button color="{{color}}" block (click)="connectBluetooth()" style="position:absolute;bottom:15px;right:0">{{status}}</button>
+  </body>
+  <!--<img src="/assets/bola.png"/>-->
+
+  <button ion-button color="danger" block (click)="makeGetRequest()" style="position:absolute;bottom:15px;right:0">Conectar </button>
 
 </ion-content>

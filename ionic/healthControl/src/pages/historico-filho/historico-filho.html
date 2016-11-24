@@ -15,8 +15,8 @@
 
 <ion-content padding>
   <p>Batimentos: {{bpm}}</p>
-  <p>Hora: {{hora}}</p>
-  <p>Data: {{data}}</p>
+  <p>Hora: {{hora | date: 'hh:mm'}}</p>
+  <p>Data: {{data | date: 'shortDate'}}</p>
 
 
 </ion-content>
