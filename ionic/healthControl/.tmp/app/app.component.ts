@@ -6,6 +6,8 @@ import { Historico } from '../pages/historico/historico';
 import { Login } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { Medico } from '../pages/medico/medico';
+import { Bluetooth } from '../pages/bluetooth/bluetooth';
+import { BluetoothSerial } from 'ionic-native';
 //import { HistoricoFilho } from '../pages/historico-filho/historico-filho';
 
 @Component({
@@ -21,6 +23,7 @@ export class MyApp {
       {component:Medico, title:'Medico',icon: 'heart'},
       {component:Historico, title:'Historico',icon: 'stats'},
       {component:Configuracao, title:'Configuração',icon: 'options'},
+      {component:Bluetooth, title:'Bluetooth',icon: 'bluetooth'},
       {component:Login, title:'Login',icon: 'log-in'}
     ];
 
@@ -28,6 +31,13 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+      // Enable bluetooth once the app is loaded
+      BluetoothSerial.isEnabled().then(res => {
+        // Do nothing, bluetooth is connected
+      }).catch(res => {
+        // Turn on bluetooth
+        BluetoothSerial.enable();
+      });
     });
   }
   openPage(page: any) : void{

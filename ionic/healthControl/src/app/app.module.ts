@@ -8,6 +8,7 @@ import { Historico } from '../pages/historico/historico';
 import { Login } from '../pages/login/login';
 import { HistoricoFilho } from '../pages/historico-filho/historico-filho';
 import { Bluetooth } from '../pages/bluetooth/bluetooth';
+import { Device } from '../pages/device/device';
 @NgModule({
   declarations: [
     MyApp,
@@ -17,7 +18,8 @@ import { Bluetooth } from '../pages/bluetooth/bluetooth';
     Configuracao,
     Historico,
     HistoricoFilho,
-    Bluetooth
+    Bluetooth,
+    Device
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -31,7 +33,8 @@ import { Bluetooth } from '../pages/bluetooth/bluetooth';
     Configuracao,
     Historico,
     HistoricoFilho,
-    Bluetooth
+    Bluetooth,
+    Device
   ],
   providers: []
 })
