@@ -15,16 +15,18 @@ import { DeviceService } from '../services/DeviceService';
 })
 export class HomePage {
 
-  bpm: number;
-  status: String; color: String;
-  connected: boolean;
+  status: String; color: String; bpm: String;
+  connected: boolean; isReading: boolean;
+  listBPM: Array<String>;
 
   constructor(private http:Http, public navCtrl: NavController, private deviceService: DeviceService) {
     this.http = http;
-    this.status = 'Conectar';
+    this.listBPM = [];
+    this.status = 'Ler valores';
     this.connected = deviceService.getConnected();
     this.color = 'secondary';
-    this.bpm = 0;
+    this.bpm = '0';
+    this.isReading = false;
   }
 
   static get parameters() {
@@ -47,11 +49,14 @@ export class HomePage {
         this.connected = true;
         this.deviceService.setConnected(this.connected);
         this.color = 'danger';
+        console.log("ler novamente");
+        this.pullBPM();
       }
       else {
+        this.isReading = false;
         console.log("desconectou");
         this.deviceService.getConnection().unsubscribe();
-        this.status = 'Conectar';
+        this.status = 'Ler valores';
         this.connected = false;
         this.deviceService.setConnected(this.connected);
         this.color = 'secondary';
@@ -61,15 +66,41 @@ export class HomePage {
       this.connected = false;
       this.deviceService.setConnected(this.connected);
       this.color = 'secondary';
-      this.navCtrl.push(Bluetooth);
+      this.navCtrl.push(Bluetooth, {
+        request: true
+      });
     });
   }
 
   pullBPM() {
-    BluetoothSerial.read().then(res => {
-      console.log(res);
-      this.bpm = res[0];
+    this.listBPM = [];
+    this.isReading = true;
+    BluetoothSerial.clear().then(res => {
+      console.log("buffer cleared");
     });
+    setTimeout(() => {
+      BluetoothSerial.read().then(res => {
+        var result = res.split('\n');
+        console.log(result);
+        console.log("reading data");
+        this.bpm = result[0];
+        for(var key in result) {
+          if(result[key] != '') {
+            this.listBPM.push(result[key]);
+          }
+        }
+        console.log(this.listBPM);
+        this.isReading = false;
+      });
+      BluetoothSerial.clear().then(res => {
+        console.log("buffer cleared");
+      });
+    }, 5000);
+    console.log("parou de ler");
+    this.status = 'Ler valores';
+    this.connected = false;
+    this.deviceService.setConnected(this.connected);
+    this.color = 'secondary';
   }
 
   ionViewDidEnter() {
@@ -79,7 +110,7 @@ export class HomePage {
       this.color = 'danger';
       this.pullBPM();
     } else {
-      this.status = 'Conectar';
+      this.status = 'Ler valores';
       this.color = 'secondary';
     }
   }

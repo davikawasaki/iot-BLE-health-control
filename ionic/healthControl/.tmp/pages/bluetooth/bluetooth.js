@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { BluetoothSerial } from 'ionic-native';
 import { DeviceService } from '../services/DeviceService';
 /*
@@ -9,11 +9,18 @@ import { DeviceService } from '../services/DeviceService';
   Ionic pages and navigation.
 */
 export var Bluetooth = (function () {
-    function Bluetooth(navCtrl, deviceService) {
+    function Bluetooth(navCtrl, navParams, deviceService) {
         this.navCtrl = navCtrl;
+        this.navParams = navParams;
         this.deviceService = deviceService;
         this.devicesList = [];
         this.isScanning = false;
+        this.scan = 'Escanear Dispositivos';
+        this.color = 'secondary';
+        this.request = navParams.get('request');
+        if (this.request) {
+            this.startScanning();
+        }
     }
     Object.defineProperty(Bluetooth, "parameters", {
         get: function () {
@@ -31,6 +38,8 @@ export var Bluetooth = (function () {
         var _this = this;
         console.log("Scanning Started");
         this.devicesList = [];
+        this.scan = 'Escaneando';
+        this.color = 'danger';
         this.isScanning = true;
         BluetoothSerial.discoverUnpaired().then(function (res) {
             console.log(res);
@@ -41,9 +50,13 @@ export var Bluetooth = (function () {
             }
             _this.devicesList = res;
             _this.isScanning = false;
+            _this.scan = 'Escanear Novamente';
+            _this.color = 'secondary';
         }).catch(function (res) {
             console.log('Error in fetching bluetooth data');
             _this.isScanning = false;
+            _this.scan = 'Escanear Novamente';
+            _this.color = 'secondary';
         });
         // BLE.startScan([]).subscribe(device => {
         //   this.devicesList.push(device);
@@ -105,6 +118,7 @@ export var Bluetooth = (function () {
     /** @nocollapse */
     Bluetooth.ctorParameters = [
         { type: NavController, },
+        { type: NavParams, },
         { type: DeviceService, },
     ];
     return Bluetooth;

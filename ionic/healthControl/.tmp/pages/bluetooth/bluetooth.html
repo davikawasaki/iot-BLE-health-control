@@ -19,20 +19,20 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="row display-flex center">
-    <ion-spinner *ngIf="isScanning" name="circles"></ion-spinner>
-  </div>
+  <ion-row class="display-flex center">
+    <ion-spinner *ngIf="isScanning" name="circles" style="font-size: 5em;"></ion-spinner>
+  </ion-row>
   <ion-list inset>
     <div *ngFor="let device of devicesList" #slidingItem>
       <button ion-item (click)="connectToDevice(device)">
         <ion-label>{{device.name}}</ion-label>
         <ion-label>{{device.id}}</ion-label>
-        <ion-label>{{device.address}}</ion-label>
+        <!-- <ion-label>{{device.address}}</ion-label> -->
         <!-- <h2>{{device.name}}</h2>
         <p>{{device.id}}</p>
         <p>{{device.rssi}}</p> -->
       </button>
     </div>
   </ion-list>
-  <button ion-button color="secondary" block (click)="startScanning()" style="position:absolute;bottom:15px;right:0">Escanear Dispositivos</button>
+  <button ion-button color="{{color}}" block (click)="startScanning()" style="position:absolute;bottom:15px;right:0">{{scan}}</button>
 </ion-content>

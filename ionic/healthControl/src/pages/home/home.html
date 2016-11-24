@@ -20,6 +20,9 @@
   <ion-row class="bola">
     <h1 class="bola display-flex">{{bpm}}</h1>
   </ion-row>
+  <ion-row class="display-flex center">
+    <ion-spinner *ngIf="isReading" name="circles" style="font-size: 5em;"></ion-spinner>
+  </ion-row>
 
   <button ion-button color="{{color}}" block (click)="connectBluetooth()" style="position:absolute;bottom:15px;right:0">{{status}}</button>
 

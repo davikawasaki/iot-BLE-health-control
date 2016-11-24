@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 // import { BLE } from 'ionic-native';
 // import { Device } from '../device/device';
 // import { HomePage } from '../home/home';
@@ -21,12 +21,19 @@ import { DeviceService } from '../services/DeviceService';
 export class Bluetooth {
 
   devicesList: Array<any>;
-  isScanning: boolean;
+  isScanning: boolean; request: boolean;
+  scan: String; color: String;
   platform: any;
 
-  constructor(public navCtrl: NavController, private deviceService: DeviceService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private deviceService: DeviceService) {
     this.devicesList = [];
     this.isScanning = false;
+    this.scan = 'Escanear Dispositivos';
+    this.color = 'secondary';
+    this.request = navParams.get('request');
+    if(this.request) {
+      this.startScanning();
+    }
   }
   static get parameters() {
     return [[NavController]];
@@ -40,6 +47,8 @@ export class Bluetooth {
   startScanning() {
     console.log("Scanning Started");
     this.devicesList = [];
+    this.scan = 'Escaneando';
+    this.color = 'danger';
     this.isScanning = true;
     BluetoothSerial.discoverUnpaired().then(res => {
       console.log(res);
@@ -50,9 +59,13 @@ export class Bluetooth {
       }
       this.devicesList = res;
       this.isScanning = false;
+      this.scan = 'Escanear Novamente';
+      this.color = 'secondary';
     }).catch(res => {
       console.log('Error in fetching bluetooth data');
       this.isScanning = false;
+      this.scan = 'Escanear Novamente';
+      this.color = 'secondary';
     });
     // BLE.startScan([]).subscribe(device => {
     //   this.devicesList.push(device);

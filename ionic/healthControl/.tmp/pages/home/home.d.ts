@@ -7,10 +7,12 @@ export declare class HomePage {
     private http;
     navCtrl: NavController;
     private deviceService;
-    bpm: number;
     status: String;
     color: String;
+    bpm: String;
     connected: boolean;
+    isReading: boolean;
+    listBPM: Array<String>;
     constructor(http: Http, navCtrl: NavController, deviceService: DeviceService);
     static readonly parameters: typeof Http[][];
     makeGetRequest(): void;

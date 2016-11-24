@@ -1,27 +1,23 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
-import { Configuracao } from '../pages/configuracao/configuracao';
 import { Historico } from '../pages/historico/historico';
-import { Login } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { Medico } from '../pages/medico/medico';
 import { Bluetooth } from '../pages/bluetooth/bluetooth';
 import { BluetoothSerial } from 'ionic-native';
 import { DeviceService } from '../pages/services/DeviceService';
 //import { HistoricoFilho } from '../pages/historico-filho/historico-filho';
 export var MyApp = (function () {
+    // Medico=Medico;
     function MyApp(platform, deviceService) {
         this.deviceService = deviceService;
         this.rootPage = HomePage;
-        this.Medico = Medico;
         this.pages = [
             { component: HomePage, title: 'Home', icon: 'home' },
-            { component: Medico, title: 'Medico', icon: 'heart' },
+            // {component:Medico, title:'Medico',icon: 'heart'},
             { component: Historico, title: 'Historico', icon: 'stats' },
-            { component: Configuracao, title: 'Configuração', icon: 'options' },
+            // {component:Configuracao, title:'Configuração',icon: 'options'},
             { component: Bluetooth, title: 'Bluetooth', icon: 'bluetooth' },
-            { component: Login, title: 'Login', icon: 'log-in' }
         ];
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
