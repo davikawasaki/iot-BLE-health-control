@@ -18,7 +18,7 @@ export class HomePage {
   status: String; color: String; bpm: String;
   connected: boolean; isReading: boolean;
   listBPM: Array<String>;
-
+  
   constructor(private http:Http, public navCtrl: NavController, private deviceService: DeviceService) {
     this.http = http;
     this.listBPM = [];
@@ -114,4 +114,29 @@ export class HomePage {
       this.color = 'secondary';
     }
   }
+
+
+  // submit() { //funcao para enviar dados para o servidor
+  //   for (var item of this.listBPM) { //this.listBPM é o vetor com os valores dos batimentos q serao enviados para o servidor
+  //       var link = 'http://healthcontrol.luiseduardoluz.com/sendData.php?bpm='+item+'&sensor=1'; // eu coloquei valor estatico para o sensor pq aparentemente so funciona se o valor for 1
+  //       //let body = new FormData();
+  //       //body.append('bpm', "67");
+  //       //body.append('sensor', "2");
+  // 
+  //       var data = JSON.stringify({bpm: "80", sensor: "1"});  // ignora esses valores para bpm e sensor
+  //       //console.log(data);
+  //       // let headers = new Headers({
+  //       //   'NDAPI-Key': 'XXXXXXXXX',
+  //       //   'NDAPI-Host': 'XXXXXXXXX' });
+  //       //   let options = new RequestOptions({ headers: headers });
+  //       this.http.post(link, data)
+  //       //.map(res => res.json())
+  //       .subscribe(data => {
+  //         console.log("FOII");
+  //        //this.data.response = data._body;
+  //       }, err => {
+  //           console.log("Oooops!");
+  //       });
+  //     }
+  // }
 }
