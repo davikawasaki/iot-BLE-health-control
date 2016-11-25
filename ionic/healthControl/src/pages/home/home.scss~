@@ -10,7 +10,7 @@ p{
 
 }
 ion-row.bola{
-  background-image: url("../assets/hearth.gif");
+  background-image: url("../assets/bola.png");
   background-repeat: no-repeat;
   background-position: center;
   height: 50%;
